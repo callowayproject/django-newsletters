@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from django.contrib.site.models import Site
+from django.contrib.sites.models import Site
 
 current_site = Site.objects.get_current()
 
@@ -13,6 +13,9 @@ DEFAULT_SETTINGS = {
     ),
     'DEFAULT_TEMPLATE': 'newsletters/default.html',
     'ADVERTISEMENT_STORAGE': settings.DEFAULT_FILE_STORAGE,
+    'FROM_EMAIL': 'no-reply@%s' % current_site.domain,
+    'AUTO_CONFIRM': True,
+    'EMAIL_NOTIFICATION_SUBJECT': '[%s] Newsletter Subscription Change' % current_site.name
 }
 
 USER_SETTINGS = DEFAULT_SETTINGS.copy()

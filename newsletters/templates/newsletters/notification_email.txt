@@ -1,0 +1,16 @@
+This is a courtesy email notifying you of a change in the subscription
+status of one or more of the {{ site.name }} newsletters.
+
+{% if unsubscriptions %}You have been unsubscribed from:
+{% for newsletter in  unsubscriptions%}
+  * {{ newsletter.name }}
+{% endfor %}
+
+{% endif %}{% if subscriptions %}You have been subscribed to:
+{% for newsletter in subscriptions%}
+  * {{ newsletter.name }}
+{% endfor %}
+
+{% endif %}
+
+If this is in error, please go to http://{{ site.domain }}{% url newsletters_manage email=email %} to correct it.

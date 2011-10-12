@@ -1,12 +1,15 @@
+from django.core.mail import send_mail
+from django.contrib.sites.models import Site
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
+from django.template import loader, Context, RequestContext
 from django.template.loader import select_template
 from django.http import (Http404, HttpResponseNotAllowed,
                          HttpResponseRedirect)
 from django.core.urlresolvers import reverse
 
 from newsletters.models import Newsletter, Advertisement, Subscription
-from newsletters.settings import DEFAULT_TEMPLATE
+from newsletters.settings import (DEFAULT_TEMPLATE, AUTO_CONFIRM, FROM_EMAIL, 
+                                EMAIL_NOTIFICATION_SUBJECT)
 from newsletters.forms import NewsletterForm, get_newsletters_with_subs
 from newsletters.jsonresponse import JSONResponse
 
@@ -33,14 +36,34 @@ def sync_subscriptions(sub_form):
     subs = [nl for nl in new_subs if nl not in old_subs_nl]
     
     for item in unsubs:
-        print item
         item.delete()
     for item in subs:
         sub = Subscription.objects.create(
             email=sub_form.cleaned_data['email'],
             newsletter=item,
+            confirmed=AUTO_CONFIRM,
         )
+    send_notification(unsub_nl, subs, sub_form.cleaned_data['email'])
     return unsub_nl, subs
+
+def send_notification(unsub_newsletters, sub_newsletters, email):
+    """
+    Send an email notifying the ``email`` recipient they have been
+    subscribed to the newsletters in sub_newsletters, and/or unsubscribed
+    from the newsletters in unsub_newsletters.
+    """
+    current_site = Site.objects.get_current()
+    
+    t = loader.get_template('newsletters/notification_email.txt')
+    c = Context({
+        'unsubscriptions': unsub_newsletters, 
+        'subscriptions': sub_newsletters,
+        'site': current_site,
+        'email': email,
+    })
+    send_mail(EMAIL_NOTIFICATION_SUBJECT, t.render(c), FROM_EMAIL, [email], 
+            fail_silently=False)
+
 
 def detail(request, newsletter_slug):
     """
@@ -87,6 +110,7 @@ def manage(request, email=None):
                 message.append(
                     "Successfully subscribed to %s" % 
                     ', '.join(map(unicode,subs)))
+        if is_json_request(request):
             return JSONResponse({
                 'newsletters': get_newsletters_with_subs(email),
                 'messages': message})
@@ -163,6 +187,7 @@ def subscribe(request, newsletter_slug):
         # The user wasn't subscribed, so we'll create it.
         sub = Subscription.objects.create(email=request.POST['email'],
                                     newsletter=newsletter)
+        send_notification([], [newsletter], request.POST['email'])
     if is_json_request(request):
         return JSONResponse({'success': True, 'message': ''})
     return render_to_response('newsletters/subscribe.html', {
@@ -192,6 +217,7 @@ def unsubscribe(request, newsletter_slug):
         sub = Subscription.objects.get(email=request.POST['email'],
                                        newsletter=newsletter)
         sub.delete()
+        send_notification([newsletter], [], request.POST['email'])
     except Subscription.DoesNotExist:
         pass # The user wasn't subscribed, so just fail gracefully.
     
