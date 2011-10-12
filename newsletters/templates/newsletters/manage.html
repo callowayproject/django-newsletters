@@ -1,0 +1,32 @@
+{% extends "newsletters/base.html" %}
+
+{% block content %}
+{% if messages %}
+    <ul>
+        {% for message in messages %}<li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<h2>Manage Your Subscriptions</h2>
+<form action="." method="post">{% csrf_token %}
+    {% if form.errors %}
+        <ul class="error">
+        {% for error in form.errors.values %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <p>{{ form.email.label_tag }}: {{ form.email }}</p>
+    
+    <ul>
+    {% for field in form %}
+        {% ifnotequal field.label 'Email' %}
+            <li>{{ field }}&nbsp;{{ field.label_tag }}</li>
+        {% endifnotequal %}
+    {% endfor %}
+    </ul>
+     <input type="submit"></input>
+</form>
+<ul>
+</ul>
+{% endblock %}

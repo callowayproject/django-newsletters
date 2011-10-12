@@ -1,0 +1,222 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Subscriptions &mdash; django-newsletters v0.1a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1a1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-newsletters v0.1a1 documentation" href="index.html" />
+    <link rel="next" title="Reference" href="reference/index.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" /> 
+  </head>
+  <body>
+<div id="docstitle">
+	<p>django-newsletters v0.1a1 documentation</p>
+</div>
+<div id="header">
+	<div id="title"><h1>Subscriptions</h1></div>
+	<ul id="headerButtons">
+		<li id="toc_button"><div class="headerButton"><a href="#">Table of Contents</a></div></li>
+		<li id="page_buttons">
+			<div class="headerButton"><a href="genindex.html" title="General Index" accesskey="I">index</a></div>
+			<div class="headerButton"><a href="reference/index.html" title="Reference" accesskey="N">next</a></div>
+			<div class="headerButton"><a href="getting_started.html" title="Getting Started" accesskey="P">previous</a></div>
+		</li>
+	</ul>
+</div>
+
+<div id="sphinxsidebar">
+  <div class="sphinxsidebarwrapper">
+	<ul><li class="toctree-l1"><a href="index.html">Main Page</a></li></ul>
+	<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Subscriptions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-api-workflow">Basic API workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Subscriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference</a></li>
+</ul>
+
+    <div id="searchbox" style="display: none">
+      
+        <form class="search" action="search.html" method="get">
+			<div class="search-wrapper">
+			<span class="search-left"></span>
+			<input class="prettysearch" type="text" name="q" size="18" />
+			<span class="search-right">&nbsp;</span>
+			</div>
+          <input type="submit" value="Search" class="searchbutton" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        <p class="searchtip" style="font-size: 90%">
+        Enter search terms or a module, class or function name.
+        </p>
+    </div>
+    <script type="text/javascript">$('#searchbox').show(0);</script>
+  </div>
+</div>
+
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="subscriptions">
+<h1>Subscriptions<a class="headerlink" href="#subscriptions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-api-workflow">
+<h2>Basic API workflow<a class="headerlink" href="#basic-api-workflow" title="Permalink to this headline">¶</a></h2>
+<p><strong>index:</strong> Allows new users to sign up for newsletters</p>
+<p><strong>user newsletter management:</strong> Allows a user change the subscription status of all the newsletters. This does not do atomic changes. It changes the status for all newsletters at once.</p>
+<p><strong>newsletter detail:</strong> Provides the HTML of the newsletter. Renders the first template it finds in the order:</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">newsletters/&lt;newsletter-slug&gt;.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">newsletters/category.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">NEWSLETTERS_SETTINGS['DEFAULT_TEMPLATE']</span></tt></li>
+</ol>
+<p>The template will have the following variables in the context:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">newsletter:</span></tt> The Newsletter object</li>
+<li><tt class="docutils literal"><span class="pre">category:</span></tt> The Category object of the newsletter</li>
+<li><tt class="docutils literal"><span class="pre">ads:</span></tt> A list of Advertisement objects scheduled for this newsletter</li>
+</ul>
+<p>Management of newsletter subscriptions is managed through a simple API:</p>
+<p>A <tt class="docutils literal"><span class="pre">GET</span></tt> or <tt class="docutils literal"><span class="pre">POST</span></tt> request to the <strong>newsletter index page</strong> returns a page with a form for signing up, a list of the available newsletters with checkboxes, and a field to enter the e-mail address.</p>
+<p>If the request also includes <tt class="docutils literal"><span class="pre">format=JSON</span></tt>, the newsletter list and signup URL are sent in <tt class="docutils literal"><span class="pre">JSON</span></tt> format.</p>
+<p>A <tt class="docutils literal"><span class="pre">GET</span></tt> or <tt class="docutils literal"><span class="pre">POST</span></tt> request to the newsletter index page with the parameter <tt class="docutils literal"><span class="pre">u</span></tt> and the users e-mail address (<tt class="docutils literal"><span class="pre">u=username&#64;example.com</span></tt>) will redirect to the <strong>newsletter manage page,</strong> which includes the list of newsletters that the e-mail address is subscribed and allows the user to modify the list.</p>
+<p>A summary is provided below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="9%" />
+<col width="16%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Request Type</th>
+<th class="head">Has u</th>
+<th class="head">has format</th>
+<th class="head">Result</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>GET</td>
+<td>No</td>
+<td>No</td>
+<td>HTML newsletter sign up form</td>
+</tr>
+<tr><td>GET</td>
+<td>Yes</td>
+<td>No</td>
+<td>Redirect to manage page for user</td>
+</tr>
+<tr><td>GET</td>
+<td>No</td>
+<td>Yes</td>
+<td>JSON newsletter list and sign up URL</td>
+</tr>
+<tr><td>GET</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Redirect to manage page for user</td>
+</tr>
+<tr><td>POST</td>
+<td>No</td>
+<td>No</td>
+<td>HTML newsletter sign up form</td>
+</tr>
+<tr><td>POST</td>
+<td>Yes</td>
+<td>No</td>
+<td>Redirect to manage page for user</td>
+</tr>
+<tr><td>POST</td>
+<td>No</td>
+<td>Yes</td>
+<td>JSON newsletter list and sign up URL</td>
+</tr>
+<tr><td>POST</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Redirect to manage page for user</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id1">
+<h2>Subscriptions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example subscription landing page.</p>
+<img alt="An example subscription landing page" src="_images/subscriptionform2.png" />
+<div class="section" id="start">
+<h3>Start<a class="headerlink" href="#start" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>User goes to the mailing list landing page.</li>
+<li>They have the choice to manage their newsletter subscriptions (returning user), or sign up for newsletters (new user)</li>
+</ol>
+</div>
+<div class="section" id="new-users">
+<h3>New Users<a class="headerlink" href="#new-users" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>A list of available newsletters with checkboxes, a text field for their e-mail address, and a submit button are available.</li>
+<li>The user enters their email address, checks the appropriate newsletters and submits the form.</li>
+<li>If there are errors in the submission, the form will appear again with an error message.</li>
+<li>If there are no errors, a success page is displayed informing the user a confirmation email was sent.</li>
+</ol>
+</div>
+<div class="section" id="returning-users">
+<h3>Returning Users<a class="headerlink" href="#returning-users" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>User submits their email address to <tt class="docutils literal"><span class="pre">./manage/</span></tt></li>
+<li>The form shows all currently subscribed newsletters with checked checkboxes.</li>
+<li>The user can check or uncheck the boxes to subscribe or unsubscribe from the newsletters.</li>
+<li>Submission of the form will either provide information regarding errors in the form or displays a success page informing the user a confirmation email was sent.</li>
+</ol>
+</div>
+<div class="section" id="confirmation">
+<h3>Confirmation<a class="headerlink" href="#confirmation" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>The confirmation email tells the user that there was a change to their newsletter subscriptions. It contains a link to manage their subscriptions if there was an error.</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div> 
+        </div>
+      </div>
+    <div class="footer">
+    <p>
+      &copy; Copyright 2010, coordt.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+	</p>
+    </div>
+      <div class="clearer"></div>
+    </div>
+	<div id="breadcrumbs">
+		Subscriptions
+		</ul>
+	</div>
+	<script type="text/javascript" charset="utf-8" src="_static/toc.js"></script>
+  </body>
+</html>

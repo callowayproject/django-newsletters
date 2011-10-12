@@ -1,0 +1,226 @@
+[
+    {
+        "pk": 1, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Breaking News", 
+            "template": "", 
+            "slug": "breaking-news"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Capitals and NHL news", 
+            "template": "", 
+            "slug": "capitals-and-nhl-news"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Energy & Environment", 
+            "template": "", 
+            "slug": "energy-environment"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Entertainment", 
+            "template": "", 
+            "slug": "entertainment"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Faith and Family", 
+            "template": "", 
+            "slug": "faith-and-family"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Health", 
+            "template": "", 
+            "slug": "health"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Local Washington DC", 
+            "template": "", 
+            "slug": "local-washington-dc"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Marketing", 
+            "template": "", 
+            "slug": "marketing"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Money and Finance", 
+            "template": "", 
+            "slug": "money-and-finance"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Must Read Stories Today", 
+            "template": "", 
+            "slug": "must-read-stories-today"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "National Security", 
+            "template": "", 
+            "slug": "national-security"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Nationals and MLB", 
+            "template": "", 
+            "slug": "nationals-and-mlb"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Opinion", 
+            "template": "", 
+            "slug": "opinion"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Politics & Government", 
+            "template": "", 
+            "slug": "politics-government"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Redskins and NFL", 
+            "template": "", 
+            "slug": "redskins-and-nfl"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Showcase", 
+            "template": "", 
+            "slug": "showcase"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Sports", 
+            "template": "", 
+            "slug": "sports"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "TheConservatives.com", 
+            "template": "", 
+            "slug": "theconservativescom"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "Wizards and NBA/WNBA", 
+            "template": "", 
+            "slug": "wizards-and-nbawnba"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "newsletters.newsletter", 
+        "fields": {
+            "name": "World News", 
+            "template": "", 
+            "slug": "world-news"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "newsletters.advertisement", 
+        "fields": {
+            "active": true, 
+            "position": 2, 
+            "image": "img/newsletters/ads/e-edition300x250.gif", 
+            "newsletter": null, 
+            "link": "https://iservices.washingtontimes.com/cgi-bin/cmo_cmo.sh/custservice/web/addrfind.html?siteid=eedition&campaign=E094M300"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "newsletters.advertisement", 
+        "fields": {
+            "active": true, 
+            "position": 3, 
+            "image": "img/newsletters/ads/SmallRectangle-Podcasts.gif", 
+            "newsletter": null, 
+            "link": "http://www.washingtontimes.com/about/podcasts/"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "newsletters.advertisement", 
+        "fields": {
+            "active": true, 
+            "position": 4, 
+            "image": "img/newsletters/ads/SmallRectangle-SubscribeToday.jpeg", 
+            "newsletter": null, 
+            "link": "https://wtw.magserv.com/cgi-bin/subscribe"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "newsletters.advertisement", 
+        "fields": {
+            "active": true, 
+            "position": 1, 
+            "image": "img/newsletters/ads/e-edition_static728x90.jpg", 
+            "newsletter": null, 
+            "link": "https://iservices.washingtontimes.com/cgi-bin/cmo_cmo.sh/custservice/web/addrfind.html?siteid=eedition&campaign=E094S728"
+        }
+    }
+]
