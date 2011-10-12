@@ -6,13 +6,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Settings &mdash; django-newsletters v0.1a1 documentation</title>
+    <title>Settings &mdash; django-newsletters v0.1b1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1a1',
+        VERSION:     '0.1b1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,13 +21,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="django-newsletters v0.1a1 documentation" href="../index.html" />
+    <link rel="top" title="django-newsletters v0.1b1 documentation" href="../index.html" />
     <link rel="up" title="Reference" href="index.html" />
     <link rel="prev" title="Reference" href="index.html" /> 
   </head>
   <body>
 <div id="docstitle">
-	<p>django-newsletters v0.1a1 documentation</p>
+	<p>django-newsletters v0.1b1 documentation</p>
 </div>
 <div id="header">
 	<div id="title"><h1>Settings</h1></div>
@@ -88,6 +88,9 @@
 <li><a class="reference internal" href="#positions" id="id2">POSITIONS</a></li>
 <li><a class="reference internal" href="#default-template" id="id3">DEFAULT_TEMPLATE</a></li>
 <li><a class="reference internal" href="#advertisement-storage" id="id4">ADVERTISEMENT_STORAGE</a></li>
+<li><a class="reference internal" href="#from-email" id="id5">FROM_EMAIL</a></li>
+<li><a class="reference internal" href="#auto-confirm" id="id6">AUTO_CONFIRM</a></li>
+<li><a class="reference internal" href="#email-notification-subject" id="id7">EMAIL_NOTIFICATION_SUBJECT</a></li>
 </ul>
 </div>
 <div class="section" id="default-settings">
@@ -101,6 +104,10 @@
     <span class="p">),</span>
     <span class="s">&#39;DEFAULT_TEMPLATE&#39;</span><span class="p">:</span> <span class="s">&#39;newsletters/default.html&#39;</span><span class="p">,</span>
     <span class="s">&#39;ADVERTISEMENT_STORAGE&#39;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">DEFAULT_FILE_STORAGE</span><span class="p">,</span>
+    <span class="s">&#39;FROM_EMAIL&#39;</span><span class="p">:</span> <span class="s">&#39;no-reply@</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">current_site</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span>
+    <span class="s">&#39;AUTO_CONFIRM&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">&#39;EMAIL_NOTIFICATION_SUBJECT&#39;</span><span class="p">:</span> <span class="s">&#39;[</span><span class="si">%s</span><span class="s">] Newsletter Subscription Change&#39;</span> <span class="o">%</span> <span class="n">current_site</span><span class="o">.</span><span class="n">name</span>
+
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -124,6 +131,21 @@
 <h2><a class="toc-backref" href="#id4">ADVERTISEMENT_STORAGE</a><a class="headerlink" href="#advertisement-storage" title="Permalink to this headline">¶</a></h2>
 <p>Storage engine to use when saving advertising images.</p>
 <p><strong>Default:</strong> settings.DEFAULT_FILE_STORAGE</p>
+</div>
+<div class="section" id="from-email">
+<h2><a class="toc-backref" href="#id5">FROM_EMAIL</a><a class="headerlink" href="#from-email" title="Permalink to this headline">¶</a></h2>
+<p>The sender of the subscription change notification emails.</p>
+<p><strong>Default:</strong> <tt class="docutils literal"><span class="pre">no-reply&#64;&lt;current</span> <span class="pre">site</span> <span class="pre">domain&gt;</span></tt></p>
+</div>
+<div class="section" id="auto-confirm">
+<h2><a class="toc-backref" href="#id6">AUTO_CONFIRM</a><a class="headerlink" href="#auto-confirm" title="Permalink to this headline">¶</a></h2>
+<p><strong>Currently not working!</strong> It is meant to allow a user to click a confirmation email to subscribe/unsubscribe. Currently not working.</p>
+<p><strong>Default:</strong> <tt class="xref docutils literal"><span class="pre">True</span></tt></p>
+</div>
+<div class="section" id="email-notification-subject">
+<h2><a class="toc-backref" href="#id7">EMAIL_NOTIFICATION_SUBJECT</a><a class="headerlink" href="#email-notification-subject" title="Permalink to this headline">¶</a></h2>
+<p>The subject of the subscription change notification e-mail.</p>
+<p><strong>Default:</strong> <tt class="docutils literal"><span class="pre">[&lt;current</span> <span class="pre">site</span> <span class="pre">name&gt;]</span> <span class="pre">Newsletter</span> <span class="pre">Subscription</span> <span class="pre">Change</span></tt></p>
 </div>
 </div>
 

@@ -8,6 +8,9 @@ Follow instructions for installation.
 Templates
 =========
 
+.. contents::
+   :local:
+
 newsletters/base.html
 ---------------------
 
@@ -69,3 +72,16 @@ newsletters/default.html
 ------------------------
 
 The default template for rendering a newsletter.
+
+newsletters/notification_email.txt
+----------------------------------
+
+The email sent to users notifying them of changes in their subscription status.
+
+**Context:**
+
+* ``unsubscriptions`` a list of :class:`Newsletter` objects from which the user unsubscribed.
+* ``subscriptions`` a list of :class:`Newsletter` objects to which the user subscribed.
+* ``site`` the current :class:`Site` object.
+* ``email`` the email of the subscriber.
+

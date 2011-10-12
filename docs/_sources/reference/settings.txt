@@ -21,6 +21,10 @@ DEFAULT_SETTINGS
 	    ),
 	    'DEFAULT_TEMPLATE': 'newsletters/default.html',
 	    'ADVERTISEMENT_STORAGE': settings.DEFAULT_FILE_STORAGE,
+	    'FROM_EMAIL': 'no-reply@%s' % current_site.domain,
+	    'AUTO_CONFIRM': True,
+	    'EMAIL_NOTIFICATION_SUBJECT': '[%s] Newsletter Subscription Change' % current_site.name
+
 	}
 
 
@@ -49,3 +53,24 @@ ADVERTISEMENT_STORAGE
 Storage engine to use when saving advertising images.
 
 **Default:** settings.DEFAULT_FILE_STORAGE
+
+FROM_EMAIL
+==========
+
+The sender of the subscription change notification emails.
+
+**Default:** ``no-reply@<current site domain>``
+
+AUTO_CONFIRM
+============
+
+**Currently not working!** It is meant to allow a user to click a confirmation email to subscribe/unsubscribe. Currently not working.
+
+**Default:** ``True``
+
+EMAIL_NOTIFICATION_SUBJECT
+==========================
+
+The subject of the subscription change notification e-mail.
+
+**Default:** ``[<current site name>] Newsletter Subscription Change``
