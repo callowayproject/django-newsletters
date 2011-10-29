@@ -133,13 +133,13 @@ def newsletter_list(request):
             cat = request.REQUEST['category__id']
             newsletters = Newsletter.objects.filter(category__id=cat).values()
         elif 'category__slug' in request.REQUEST:
-            cat = request.REQUEST['category__id']
+            cat = request.REQUEST['category__slug']
             newsletters = Newsletter.objects.filter(category__slug=cat).values()
         else:
             newsletters = Newsletter.objects.values()
         return JSONResponse(
             {'newsletters': newsletters, 
-            'signup_url': reverse('newsletters_manage_raw')})
+            'signup_url': reverse('newsletters_bulk_subscribe')})
     return render_to_response('newsletters/list.html', {
         'newsletters': Newsletter.objects.all(),
         'form': NewsletterForm(),

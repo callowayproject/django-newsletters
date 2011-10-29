@@ -24,7 +24,7 @@ urlpatterns = patterns('newsletters.views',
         name='newsletters_is_subscribed'
     ),
     url(r'^(?P<newsletter_slug>[-\w]+)/subscribe/$', 
-        'unsubscribe', 
+        'subscribe', 
         name='newsletters_subscribe'
     ),
 )
