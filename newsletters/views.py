@@ -12,7 +12,7 @@ from newsletters.settings import (DEFAULT_TEMPLATE, AUTO_CONFIRM, FROM_EMAIL,
                                 EMAIL_NOTIFICATION_SUBJECT)
 from newsletters.forms import NewsletterForm, get_newsletters_with_subs
 from newsletters.jsonresponse import JSONResponse
-
+from newsletters.signals import subscription, unsubscription
 
 def is_json_request(request):
     """
@@ -36,12 +36,21 @@ def sync_subscriptions(sub_form):
     subs = [nl for nl in new_subs if nl not in old_subs_nl]
     
     for item in unsubs:
+        unsubscription.send(
+            sender=item.newsletter, 
+            email=sub_form.cleaned_data['email'],
+            newsletter=item.newsletter)
         item.delete()
     for item in subs:
         sub = Subscription.objects.create(
             email=sub_form.cleaned_data['email'],
             newsletter=item,
             confirmed=AUTO_CONFIRM,
+        )
+        subscription.send(
+            sender=item,
+            email=sub_form.cleaned_data['email'],
+            newsletter=item,
         )
     send_notification(unsub_nl, subs, sub_form.cleaned_data['email'])
     return unsub_nl, subs
@@ -188,6 +197,8 @@ def subscribe(request, newsletter_slug):
         sub = Subscription.objects.create(email=request.POST['email'],
                                     newsletter=newsletter)
         send_notification([], [newsletter], request.POST['email'])
+        subscription.send(sender=newsletter, email=request.POST['email'],
+                                        newsletter=newsletter)
     if is_json_request(request):
         return JSONResponse({'success': True, 'message': ''})
     return render_to_response('newsletters/subscribe.html', {
@@ -217,6 +228,8 @@ def unsubscribe(request, newsletter_slug):
         sub = Subscription.objects.get(email=request.POST['email'],
                                        newsletter=newsletter)
         sub.delete()
+        unsubscription.send(sender=newsletter, email=request.POST['email'],
+                                        newsletter=newsletter)
         send_notification([newsletter], [], request.POST['email'])
     except Subscription.DoesNotExist:
         pass # The user wasn't subscribed, so just fail gracefully.
@@ -226,3 +239,4 @@ def unsubscribe(request, newsletter_slug):
     return render_to_response('newsletters/unsubscribe.html', {
         'newsletter': newsletter
     }, RequestContext(request))
+
