@@ -11,6 +11,10 @@ urlpatterns = patterns('newsletters.views',
         'manage', 
         name='newsletters_manage'
     ),
+    url(r'^subscribe/$', 
+        'bulk_subscribe', 
+        name='newsletters_bulk_subscribe'
+    ),
     url(r'^(?P<newsletter_slug>[-\w]+)/$', 
         'detail',
         name="newsletters_detail"

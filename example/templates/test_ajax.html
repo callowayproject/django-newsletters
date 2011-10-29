@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Newsletters by Category</h2>
+    <div id="result1">
+        <form action="" id="testform1" method="post">{% csrf_token %}
+            <div id="testform1-errors"></div>
+            <p id="categorynewsletters">Subscribe to one of our newsletters</p>
+            <label for="email">email</label><input type="text" name="email" value="" id="email">
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+    
+    <script type="text/javascript" charset="utf-8">
+        $('#testform1').submit(function(){
+            $.post('{%url newsletters_bulk_subscribe %}', $('#testform1').serialize(), function(data){
+                if (!data.success){
+                    $('<p/>', {html: data.message}).appendTo('#testform1-errors');
+                } else {
+                    $('#testform1').hide();
+                    $('<p/>', {html: data.message}).appendTo('#result1');
+                }
+            });
+            return false;
+        });
+        
+        $.getJSON('{% url newsletters_list %}', {category__id: 1, format:'json'}, function(data){
+            // if more than one item, use checkboxes, otherwise use a hidden field and
+            // adjust the label
+            var items = [];
+            if (data.newsletters.length > 1) {
+                $.each(data.newsletters, function(index, val) {
+                    console.log(val);
+                  items.push('<li><input type="checkbox" name="'
+                  + val.slug +'" id="id_'+ val.slug 
+                  + '" />&nbsp;<label for="id_'+ val.slug + '">'
+                  + val.name + '</label></li>');
+                });
+                $('<ul/>', {
+                  'class': 'my-new-list',
+                  html: items.join('')
+                }).appendTo('#testform1');
+            } else {
+                $('<input/>', {
+                    type: 'hidden',
+                    name: data.newsletters[0].slug,
+                    value: 'on'
+                }).appendTo('#testform1');
+                $('#categorynewsletters').text("Subscribe to our " + data.newsletters[0].name + " newsletter.");
+            }
+        });
+    </script>
+    
+    <h2>Specific Newsletter</h2>
+    <div id="result2">
+        <form action="" id="testform2" method="post">{% csrf_token %}
+            <div id="testform2-errors"></div>
+            <p id="specificnewsletter">Subscribe to our newsletter</p>
+            <label for="email">email</label><input type="text" name="email" value="" id="email">
+            <input type="hidden" id="id_newsletter" name="newsletter" value="on" />
+            <input type="submit" value="Submit" />
+        </form>
+        <script type="text/javascript" charset="utf-8">
+            $('#testform2').submit(function(){
+                $.post('{%url newsletters_bulk_subscribe %}', $('#testform2').serialize(), function(data){
+                    if (!data.success){
+                        $('<p/>', {html: data.message}).appendTo('#testform2-errors');
+                    } else {
+                        $('#testform2').hide();
+                        $('<p/>', {html: data.message}).appendTo('#result2');
+                    }
+                });
+                return false;
+            });
+            
+            // Get a newsletter
+            $.getJSON('{% url newsletters_list %}', {format: 'json'}, function(data){
+                var newsletter = data.newsletters[0];
+                $('#id_newsletter').attr('name', newsletter.slug);
+                $('#specificnewsletter').text("Subscribe to our " + newsletter.name + " newsletter.");
+            });
+            
+            
+        </script>
+    </div>
+{% endblock %}

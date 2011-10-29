@@ -170,6 +170,58 @@ def is_subscribed(request, newsletter_slug):
             return JSONResponse({'is_subscribed': False})
 
 
+def bulk_subscribe(request):
+    """
+    Subscribe to many newsletters at once. Only for use with JSON and POST
+    """
+    from django.core.validators import validate_email
+    from django.core.exceptions import ValidationError
+    try:
+        if request.method != 'POST':
+            return JSONResponse({
+                'success': False,
+                'message': 'Form must be submitted using POST.'})
+        
+        values = dict(request.POST.items())
+        del values['csrfmiddlewaretoken']
+        
+        try:
+            validate_email(values['email'])
+            email = values['email']
+            newsletters = [key for key in values.keys() if key != 'email']
+            if not newsletters:
+                return JSONResponse({
+                    'success': False, 
+                    'message': "Please select at least one newsletter."})
+            nletters = Newsletter.objects.filter(slug__in=newsletters)
+            for newsletter in nletters:
+                try:
+                    sub = Subscription.objects.get(email=email,
+                                                   newsletter=newsletter)
+                except Subscription.DoesNotExist:
+                    # The user wasn't subscribed, so we'll create it.
+                    sub = Subscription.objects.create(email=email,
+                                                newsletter=newsletter)
+                    subscription.send(
+                        sender=newsletter,
+                        email=email,
+                        newsletter=newsletter,
+                    )
+            send_notification([], nletters, email)
+            
+            return JSONResponse({
+                'success': True,
+                'message': 'You signed up for ' + ", ".join([x.name for x in nletters])})
+        except ValidationError, e:
+            return JSONResponse({
+                'success': False,
+                'message': " ".join(e.messages)})
+    except Exception, e:
+        print e
+        return JSONResponse({
+            'success': False,
+            'message': "We're sorry but a strange error occurred." + " ".join(e.messages)})
+
 def subscribe(request, newsletter_slug):
     """
     Subscribe a user to the newsletter

@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'newsletters',
     'categories',
+    'editor',
 )
 
 EMAIL_HOST = 'localhost'
