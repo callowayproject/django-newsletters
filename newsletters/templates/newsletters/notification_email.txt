@@ -1,13 +1,13 @@
 This is a courtesy email notifying you of a change in the subscription
 status of one or more of the {{ site.name }} newsletters.
 
-{% if unsubscriptions %}You have been unsubscribed from:
+{% if unsubscriptions %}You have unsubscribed from:
 {% for newsletter in  unsubscriptions%}
   * {{ newsletter.name }}
 {% endfor %}
 
-{% endif %}{% if subscriptions %}You have been subscribed to:
-{% for newsletter in subscriptions%}
+{% endif %}{% if subscriptions %}You have subscribed to:
+{% for newsletter in subscriptions %}
   * {{ newsletter.name }}
 {% endfor %}
 
