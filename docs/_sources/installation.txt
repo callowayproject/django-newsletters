@@ -1,3 +1,5 @@
+.. _installation:
+
 ============
 Installation
 ============
@@ -9,6 +11,7 @@ Installation is easy using ``pip`` or ``easy_install``.
 	pip install django-newsletters
 
 or
+
 .. code-block:: bash
 
 	easy_install django-newsletters
@@ -22,6 +25,7 @@ Add ``newsletters`` and ``categories`` into your ``settings.py``\ 's ``INSTALLED
 	    # ...
 	    'newsletters',
 	    'categories',
+	    'editor', # required for categories
 	}
 
 

@@ -46,10 +46,7 @@
 	<ul><li class="toctree-l1"><a href="index.html">Main Page</a></li></ul>
 	<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#templates">Templates</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="subscriptions.html">Subscriptions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference/index.html">Reference</a></li>
 </ul>
@@ -83,84 +80,26 @@
             
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>Follow instructions for installation.</p>
-<div class="section" id="templates">
-<h2>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
-<div class="contents local topic" id="contents">
-<ul class="simple">
-<li><a class="reference internal" href="#newsletters-base-html" id="id1">newsletters/base.html</a></li>
-<li><a class="reference internal" href="#newsletters-list-html" id="id2">newsletters/list.html</a></li>
-<li><a class="reference internal" href="#newsletters-manage-html" id="id3">newsletters/manage.html</a></li>
-<li><a class="reference internal" href="#newsletters-subscribe-html" id="id4">newsletters/subscribe.html</a></li>
-<li><a class="reference internal" href="#newsletters-unsubscribe-html" id="id5">newsletters/unsubscribe.html</a></li>
-<li><a class="reference internal" href="#newsletters-default-html" id="id6">newsletters/default.html</a></li>
-<li><a class="reference internal" href="#newsletters-notification-email-txt" id="id7">newsletters/notification_email.txt</a></li>
-</ul>
-</div>
-<div class="section" id="newsletters-base-html">
-<h3><a class="toc-backref" href="#id1">newsletters/base.html</a><a class="headerlink" href="#newsletters-base-html" title="Permalink to this headline">¶</a></h3>
-<p>All other templates extend this template.</p>
-<p>If your project&#8217;s primary content block is not called <tt class="docutils literal"><span class="pre">content</span></tt>, override <tt class="docutils literal"><span class="pre">newsletters/base.html</span></tt> and include <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">block</span> <span class="pre">content</span> <span class="pre">%}{%</span> <span class="pre">endblock</span> <span class="pre">%}</span></tt> within the name of your primary content block.</p>
-<p>For example, if your primary content block is called <tt class="docutils literal"><span class="pre">core_content</span></tt>, override <tt class="docutils literal"><span class="pre">newsletters/base.html</span></tt> to be:</p>
-<div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s1">&#39;base.html&#39;</span> <span class="cp">%}</span><span class="x"></span>
-<span class="cp">{%</span> <span class="k">block</span> <span class="nv">core_content</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">    </span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
-<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="x"></span>
+<ol class="arabic">
+<li><p class="first">Follow instructions for <a class="reference internal" href="installation.html#installation"><em>Installation</em></a>.</p>
+</li>
+<li><p class="first">Configure the <a class="reference internal" href="reference/settings.html#settings"><em>Settings</em></a>, if necessary.</p>
+</li>
+<li><p class="first">Set up the URLs in your <tt class="docutils literal"><span class="pre">urls.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s">r&#39;^newsletters/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">&#39;newsletters.urls&#39;</span><span class="p">)),</span>
+    <span class="c"># ...</span>
+<span class="p">)</span>
 </pre></div>
 </div>
-<p>The change allows all the other default templates to at least work.</p>
-</div>
-<div class="section" id="newsletters-list-html">
-<h3><a class="toc-backref" href="#id2">newsletters/list.html</a><a class="headerlink" href="#newsletters-list-html" title="Permalink to this headline">¶</a></h3>
-<p>This template displays a list of available newsletters.</p>
-<p><strong>Context:</strong></p>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">newsletters</span></tt> a list of Newsletter objects</li>
-<li><tt class="docutils literal"><span class="pre">form</span></tt> the form for signing up for a bunch of newsletters</li>
-</ul>
-</div>
-<div class="section" id="newsletters-manage-html">
-<h3><a class="toc-backref" href="#id3">newsletters/manage.html</a><a class="headerlink" href="#newsletters-manage-html" title="Permalink to this headline">¶</a></h3>
-<p>This template allows bulk subscription management for a user.</p>
-<p><strong>Context:</strong></p>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">newsletters</span></tt> a list of Newsletter objects</li>
-<li><tt class="docutils literal"><span class="pre">form</span></tt> the form for signing up for a bunch of newsletters</li>
-<li><tt class="docutils literal"><span class="pre">messages</span></tt> a list of success or failure messages relating to the last action.</li>
-</ul>
-</div>
-<div class="section" id="newsletters-subscribe-html">
-<h3><a class="toc-backref" href="#id4">newsletters/subscribe.html</a><a class="headerlink" href="#newsletters-subscribe-html" title="Permalink to this headline">¶</a></h3>
-<p>The successful result of the subscription to a specific newsletter.</p>
-<p><strong>Context:</strong></p>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">newsletter</span></tt> the Newsletter to which the user subscribed</li>
-</ul>
-</div>
-<div class="section" id="newsletters-unsubscribe-html">
-<h3><a class="toc-backref" href="#id5">newsletters/unsubscribe.html</a><a class="headerlink" href="#newsletters-unsubscribe-html" title="Permalink to this headline">¶</a></h3>
-<p>The successful result of an unsubscription to a specific newsletter.</p>
-<p><strong>Context:</strong></p>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">newsletter</span></tt> the Newsletter to which the user unsubscribed</li>
-</ul>
-</div>
-<div class="section" id="newsletters-default-html">
-<h3><a class="toc-backref" href="#id6">newsletters/default.html</a><a class="headerlink" href="#newsletters-default-html" title="Permalink to this headline">¶</a></h3>
-<p>The default template for rendering a newsletter.</p>
-</div>
-<div class="section" id="newsletters-notification-email-txt">
-<h3><a class="toc-backref" href="#id7">newsletters/notification_email.txt</a><a class="headerlink" href="#newsletters-notification-email-txt" title="Permalink to this headline">¶</a></h3>
-<p>The email sent to users notifying them of changes in their subscription status.</p>
-<p><strong>Context:</strong></p>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">unsubscriptions</span></tt> a list of <tt class="xref py py-class docutils literal"><span class="pre">Newsletter</span></tt> objects from which the user unsubscribed.</li>
-<li><tt class="docutils literal"><span class="pre">subscriptions</span></tt> a list of <tt class="xref py py-class docutils literal"><span class="pre">Newsletter</span></tt> objects to which the user subscribed.</li>
-<li><tt class="docutils literal"><span class="pre">site</span></tt> the current <tt class="xref py py-class docutils literal"><span class="pre">Site</span></tt> object.</li>
-<li><tt class="docutils literal"><span class="pre">email</span></tt> the email of the subscriber.</li>
-</ul>
-</div>
-</div>
+</li>
+<li><p class="first">Make sure your server can send e-mail notifications.</p>
+</li>
+<li><p class="first">Override the <a class="reference internal" href="reference/templates.html#templates"><em>Templates</em></a>, if necessary.</p>
+</li>
+<li><p class="first">Write a signal handler for subscription and unsubscription events.</p>
+</li>
+</ol>
 </div>
 
 

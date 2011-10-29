@@ -1,3 +1,4 @@
+.. _settings:
 
 ========
 Settings
@@ -25,6 +26,17 @@ DEFAULT_SETTINGS
 	    'AUTO_CONFIRM': True,
 	    'EMAIL_NOTIFICATION_SUBJECT': '[%s] Newsletter Subscription Change' % current_site.name
 
+	}
+
+Overriding default settings
+===========================
+
+In your ``settings.py`` file, create a dictionary named ``NEWSLETTER_SETTINGS``. You only need to include keys for the specific settings you are going to change. For example, to change the default ``FROM_EMAIL``:
+
+.. code-block:: python
+
+	NEWSLETTER_SETTINGS = {
+	    'FROM_EMAIL': 'our-newsletter-admin@example.com'
 	}
 
 

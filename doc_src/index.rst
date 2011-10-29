@@ -19,6 +19,7 @@ Contents:
    installation
    getting_started
    subscriptions
+   external_mailing_list_managers
    reference/index
 
 

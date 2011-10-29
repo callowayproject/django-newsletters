@@ -1,0 +1,23 @@
+======================
+Managing Subscriptions
+======================
+
+Upon each successful subscription or unsubscription event, Django Newsletters sends a signal. This allows you to connect outside services.
+
+Both signals provide the same two arguments: email and newsletter. The sender is always the newsletter.
+
+.. code-block:: python
+
+	from newsletters.signals import subscription, unsubscription
+
+	def print_subscription(sender, email, newsletter, *args, **kwargs):
+	    print "Subscription Event!"
+	    print email, newsletter
+
+	subscription.connect(print_subscription)
+
+	def print_unsubscription(sender, email, newsletter, *args, **kwargs):
+	    print "Unsubscription Event!"
+	    print email, newsletter
+
+	unsubscription.connect(print_unsubscription)

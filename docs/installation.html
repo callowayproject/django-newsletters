@@ -82,20 +82,21 @@
           <div class="body">
             
   <div class="section" id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <p>Installation is easy using <tt class="docutils literal"><span class="pre">pip</span></tt> or <tt class="docutils literal"><span class="pre">easy_install</span></tt>.</p>
 <div class="highlight-bash"><div class="highlight"><pre>pip install django-newsletters
 </pre></div>
 </div>
-<p>or
-.. code-block:: bash</p>
-<blockquote>
-<div>easy_install django-newsletters</div></blockquote>
+<p>or</p>
+<div class="highlight-bash"><div class="highlight"><pre>easy_install django-newsletters
+</pre></div>
+</div>
 <p>Add <tt class="docutils literal"><span class="pre">newsletters</span></tt> and <tt class="docutils literal"><span class="pre">categories</span></tt> into your <tt class="docutils literal"><span class="pre">settings.py</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c"># ...</span>
     <span class="s">&#39;newsletters&#39;</span><span class="p">,</span>
     <span class="s">&#39;categories&#39;</span><span class="p">,</span>
+    <span class="s">&#39;editor&#39;</span><span class="p">,</span> <span class="c"># required for categories</span>
 <span class="p">}</span>
 </pre></div>
 </div>

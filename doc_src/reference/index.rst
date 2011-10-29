@@ -10,3 +10,4 @@ Reference
    :glob:
    
    settings
+   templates
