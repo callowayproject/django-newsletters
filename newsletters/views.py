@@ -183,7 +183,9 @@ def bulk_subscribe(request):
                 'message': 'Form must be submitted using POST.'})
         
         values = dict(request.POST.items())
-        del values['csrfmiddlewaretoken']
+        
+        if 'csrfmiddlewaretoken' in values:
+            del values['csrfmiddlewaretoken']
         
         try:
             validate_email(values['email'])
@@ -217,10 +219,9 @@ def bulk_subscribe(request):
                 'success': False,
                 'message': " ".join(e.messages)})
     except Exception, e:
-        print e
         return JSONResponse({
             'success': False,
-            'message': "We're sorry but a strange error occurred." + " ".join(e.messages)})
+            'message': "We're sorry but a strange error occurred. (%s)" % str(e)})
 
 def subscribe(request, newsletter_slug):
     """
