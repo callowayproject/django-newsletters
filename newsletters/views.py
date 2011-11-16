@@ -88,7 +88,7 @@ def detail(request, newsletter_slug):
     if newsletter.template:
         templates.insert(newsletter.template, 0)
     
-    return render_to_response(select_template(templates), {
+    return render_to_response(templates, {
         'newsletter': newsletter,
         'category': newsletter.category,
         'ads': Advertisement.objects.current_set(newsletter)
