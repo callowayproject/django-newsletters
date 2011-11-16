@@ -56,7 +56,7 @@ class AdvertisementManager(models.Manager):
         """
         Active ads
         """
-        return self.get_query_set(active=True)
+        return self.get_query_set().filter(active=True)
     
     def current_set(self, newsletter=None):
         """
